@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name = "Member" table = "MEMBER">
+      
+      <meta attribute = "class-description">
+         This class contains the brigade member detail. 
+      </meta>
+      
+      <id name = "memberID" type = "int" column = "member_id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "gamerTag" column = "gamertag" type = "string"/>
+      <property name = "firstName" column = "first_name" type = "string"/>
+      <property name = "lastName" column = "last_name" type = "string"/>
+      <property name = "emailID" column = "email_id" type = "int"/>
+      <property name = "rankID" column = "rank_id" type = "int"/>
+      <property name = "rankDate" column = "rank_date" type = "date"/>
+      <property name = "companyID" column = "company_id" type = "int"/>
+      <property name = "recommendID" column = "recommend_id" type = "int"/>
+      <property name = "joinDate" column = "join_date" type = "date"/>
+      <property name = "active" column = "member_active" type = "boolean"/>
+            
+   </class>
+</hibernate-mapping>
