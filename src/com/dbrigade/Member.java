@@ -6,7 +6,8 @@ import javax.persistence.*;
 @Table(name = "MEMBER")
 public class Member {
 
-	@Id @GeneratedValue
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
 	private int memberID;
 	
@@ -20,7 +21,7 @@ public class Member {
 	private String lastName;
 	
 	@Column(name = "email_id")	
-	private String emailID;
+	private int emailID;
 	
 	@Column(name = "rank_id")
 	private int rankID;
@@ -38,12 +39,12 @@ public class Member {
 	private LocalDate joinDate;
 	
 	@Column(name = "member_active")	
-	private Boolean active;
+	private boolean active;
 	
 	public Member() {	}
 	
-	public Member(String gamerTag, String firstName, String lastName, String emailID, int rankID,
-			LocalDate rankDate, int companyID, int recommendID, LocalDate joinDate, Boolean active) {
+	public Member(String gamerTag, String firstName, String lastName, int emailID, int rankID,
+			LocalDate rankDate, int companyID, int recommendID, LocalDate joinDate, boolean active) {
 		super();
 		this.gamerTag = gamerTag;
 		this.firstName = firstName;
@@ -83,11 +84,11 @@ public class Member {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getEmailID() {
+	public int getEmailID() {
 		return emailID;
 	}
 	
-	public void setEmailID(String emailID) {
+	public void setEmailID(int emailID) {
 		this.emailID = emailID;
 	}
 	
@@ -131,11 +132,11 @@ public class Member {
 		this.joinDate = joinDate;
 	}
 	
-	public Boolean isActive() {
+	public boolean isActive() {
 		return active;
 	}
 	
-	public void setActive(Boolean active) {
+	public void setActive(boolean active) {
 		this.active = active;
 	}	 	
 
