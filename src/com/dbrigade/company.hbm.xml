@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name = "Company" table = "COMPANY">
+      
+      <meta attribute = "class-description">
+         This class contains the brigade's companies detail. 
+      </meta>
+      
+      <id name = "companyID" type = "int" column = "company_id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "companyName" column = "company_name" type = "string"/>
+      <property name = "captainID" column = "captain_id" type = "int"/>
+      <property name = "lieutenantID" column = "lieutenant_id" type = "int"/>
+      <property name = "active" column = "company_active" type = "boolean"/>
+            
+   </class>
+</hibernate-mapping>

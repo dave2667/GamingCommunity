@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name = "Email" table = "EMAIL">
+      
+      <meta attribute = "class-description">
+         This class contains the member's email detail. 
+      </meta>
+      
+      <id name = "emailID" type = "int" column = "email_id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "emailName" column = "email_name" type = "string"/>
+      <property name = "active" column = "email_active" type = "boolean"/>
+            
+   </class>
+</hibernate-mapping>

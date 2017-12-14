@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name = "Member" table = "MEMBER">
+      
+      <meta attribute = "class-description">
+         This class contains the brigade member detail. 
+      </meta>
+      
+      <id name = "messageID" type = "int" column = "message_id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "messageBoardID" column = "messageboard_id" type = "int"/>
+      <property name = "mainMessage" column = "main_message" type = "boolean"/>
+      <property name = "mainID" column = "main_id" type = "int"/>
+      <property name = "postTime" column = "post_time" type = "timedate" />
+      <property name = "memberID" column = "member_id" type = "int"/>
+      <property name = "messageTitle" column = "message_title" type = "string"/>
+      <property name = "messageBody" column = "message_body" type = "string"/>
+                 
+   </class>
+</hibernate-mapping>

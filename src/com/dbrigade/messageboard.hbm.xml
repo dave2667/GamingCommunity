@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name = "MessageBoard" table = "COMPANY">
+      
+      <meta attribute = "class-description">
+         This class contains the member's messageboard detail. 
+      </meta>
+      
+      <id name = "messageboardID" type = "int" column = "messageboard_id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "messageboardName" column = "messageboard_name" type = "string"/>
+      <property name = "active" column = "messageboard_active" type = "boolean"/>
+      <property name = "rankAccess" column = "rank_access" type = "boolean"/>
+           
+   </class>
+</hibernate-mapping>
