@@ -2,7 +2,7 @@ package com.dbrigade;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "EMAIL")
+@Table(name = "MESSAGEBOARD")
 public class MessageBoard {
 
 	@Id 

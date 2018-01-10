@@ -10,10 +10,10 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class ManageMessageBoard {
+public class ManageRank {
 	private static SessionFactory factory; 
 
-	public ManageMessageBoard() {}
+	public ManageRank() {}
 
 	public static void main(String[] args) {
 
@@ -24,38 +24,44 @@ public class ManageMessageBoard {
 			throw new ExceptionInInitializerError(ex); 
 		}
 
-		ManageMessageBoard MM = new ManageMessageBoard();
+		ManageRank MM = new ManageRank();
 
 		/* Add few message board records in database */
-		Integer boardID1 = MM.addMessageBoard("Community News", true, true); 
-		Integer boardID2 = MM.addMessageBoard("Brigade Commanders", true, true);
-		Integer boardID3 = MM.addMessageBoard("Captain's Lounge", true, true); 
-		Integer boardID4 = MM.addMessageBoard("Charlie Company", true, false); 
-		Integer boardID5 = MM.addMessageBoard("Alpha Compnay", true, false); 
+		Integer rankID1 = MM.addRank("Recruit", true); 
+		Integer rankID2 = MM.addRank("Private", true);
+		Integer rankID3 = MM.addRank("PFC", true); 
+		Integer rankID4 = MM.addRank("Corp", true); 
+		Integer rankID5 = MM.addRank("Sargeant", true); 
+		Integer rankID6 = MM.addRank("Lieutenant", true); 
+		Integer rankID7 = MM.addRank("Captain", true); 
+		Integer rankID8 = MM.addRank("Major", true); 
+		Integer rankID9 = MM.addRank("Colonel", true); 
+		Integer rankID10 = MM.addRank("Command Staff", true); 
+		
 
 		/* List down all the message boards */
-		MM.listMessageBoards();
+		MM.listRanks();
 
 		/* Update message board records */
-		MM.updateMessageBoard(boardID5, "Alpha Company");
+		MM.updateRank(rankID4, "Corporal");
 
 		/* Delete a message board from the database */
-		MM.deleteMessageBoard(boardID4);
+		MM.deleteRank(rankID3);
 
 		/* List down new list of the message boards */
-		MM.listMessageBoards();
+		MM.listRanks();
 	}
 
 	/* Method to CREATE a message board in the database */
-	public Integer addMessageBoard(String messageboardName, boolean active, boolean rankAccess){
+	public Integer addRank(String rankName, boolean active){
 		Session session = factory.openSession();
 		Transaction tx = null;
-		Integer messageboardID = null;
+		Integer rankID = null;
 
 		try {
 			tx = session.beginTransaction();
-			MessageBoard messageBoard = new MessageBoard(messageboardName, active, rankAccess); 
-			messageboardID = (Integer) session.save(messageBoard);   
+			Rank rank = new Rank(rankName, active); 
+			rankID = (Integer) session.save(rank);   
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
@@ -63,23 +69,22 @@ public class ManageMessageBoard {
 		} finally {
 			session.close();
 		}
-		return messageboardID;
+		return rankID;
 	}
 
-	/* Method to  READ all the messageboards */
+	/* Method to  READ all the ranks */
 	@SuppressWarnings("unchecked")
-	public void listMessageBoards( ){
+	public void listRanks( ){
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			List<MessageBoard> messageBoards = session.createQuery("FROM MessageBoard").list(); 
-			for (Iterator<MessageBoard> iterator = messageBoards.iterator(); iterator.hasNext();){
-				MessageBoard messageBoard = iterator.next(); 
-				System.out.print("Messageboard Name: " + messageBoard.getMessageboardName()); 
-				System.out.print("           Active: " + messageBoard.isActive()); 
-				System.out.print(" Rank Access Only: " + messageBoard.isRankAccess()); 
+			List<Rank> ranks = session.createQuery("FROM Rank").list(); 
+			for (Iterator<Rank> iterator = ranks.iterator(); iterator.hasNext();){
+				Rank rank = iterator.next(); 
+				System.out.println("Rank Name: " + rank.getRankName()); 
+				System.out.println("    Active: " + rank.isActive()); 
 			}
 			tx.commit();
 		} catch (HibernateException e) {
@@ -90,16 +95,16 @@ public class ManageMessageBoard {
 		}
 	}
 
-	/* Method to UPDATE board name of a messageboard */
-	public void updateMessageBoard(Integer messageBoardID, String messageBoardName ){
+	/* Method to UPDATE board name of a rank */
+	public void updateRank(Integer rankID, String rankName ){
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			MessageBoard messageBoard = session.get(MessageBoard.class, messageBoardID); 
-			messageBoard.setMessageboardName( messageBoardName );
-			session.update(messageBoardName); 
+			Rank rank = session.get(Rank.class, rankID); 
+			rank.setRankName( rankName );
+			session.update(rankName); 
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
@@ -110,14 +115,14 @@ public class ManageMessageBoard {
 	}
 
 	/* Method to DELETE a message board from the records */
-	public void deleteMessageBoard(Integer messageBoardID){
+	public void deleteRank(Integer rankID){
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			MessageBoard messageBoard = session.get(MessageBoard.class, messageBoardID); 
-			session.delete(messageBoard); 
+			Rank rank = session.get(Rank.class, rankID); 
+			session.delete(rank); 
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();

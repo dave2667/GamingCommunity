@@ -10,10 +10,10 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class ManageMessageBoard {
+public class ManageCompany {
 	private static SessionFactory factory; 
 
-	public ManageMessageBoard() {}
+	public ManageCompany() {}
 
 	public static void main(String[] args) {
 
@@ -24,38 +24,36 @@ public class ManageMessageBoard {
 			throw new ExceptionInInitializerError(ex); 
 		}
 
-		ManageMessageBoard MM = new ManageMessageBoard();
+		ManageCompany MM = new ManageCompany();
 
 		/* Add few message board records in database */
-		Integer boardID1 = MM.addMessageBoard("Community News", true, true); 
-		Integer boardID2 = MM.addMessageBoard("Brigade Commanders", true, true);
-		Integer boardID3 = MM.addMessageBoard("Captain's Lounge", true, true); 
-		Integer boardID4 = MM.addMessageBoard("Charlie Company", true, false); 
-		Integer boardID5 = MM.addMessageBoard("Alpha Compnay", true, false); 
+		Integer companyID1 = MM.addCompany("Brigade HQ", 1, 3, true); 
+		Integer companyID2 = MM.addCompany("Charlie Company", 3, 1, true);
+		Integer companyID3 = MM.addCompany("Alpha Company", 3, 1, true); 
 
 		/* List down all the message boards */
-		MM.listMessageBoards();
+		MM.listCompanys();
 
 		/* Update message board records */
-		MM.updateMessageBoard(boardID5, "Alpha Company");
+		MM.updateCompany(companyID3, "Alpha Company");
 
 		/* Delete a message board from the database */
-		MM.deleteMessageBoard(boardID4);
+		MM.deleteCompany(companyID2);
 
 		/* List down new list of the message boards */
-		MM.listMessageBoards();
+		MM.listCompanys();
 	}
 
 	/* Method to CREATE a message board in the database */
-	public Integer addMessageBoard(String messageboardName, boolean active, boolean rankAccess){
+	public Integer addCompany(String companyName, Integer captainID, Integer lieutenantID, boolean active){
 		Session session = factory.openSession();
 		Transaction tx = null;
-		Integer messageboardID = null;
+		Integer companyID = null;
 
 		try {
 			tx = session.beginTransaction();
-			MessageBoard messageBoard = new MessageBoard(messageboardName, active, rankAccess); 
-			messageboardID = (Integer) session.save(messageBoard);   
+			Company company = new Company(companyName, captainID, lieutenantID, active); 
+			companyID = (Integer) session.save(company);   
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
@@ -63,23 +61,24 @@ public class ManageMessageBoard {
 		} finally {
 			session.close();
 		}
-		return messageboardID;
+		return companyID;
 	}
 
-	/* Method to  READ all the messageboards */
+	/* Method to  READ all the companys */
 	@SuppressWarnings("unchecked")
-	public void listMessageBoards( ){
+	public void listCompanys( ){
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			List<MessageBoard> messageBoards = session.createQuery("FROM MessageBoard").list(); 
-			for (Iterator<MessageBoard> iterator = messageBoards.iterator(); iterator.hasNext();){
-				MessageBoard messageBoard = iterator.next(); 
-				System.out.print("Messageboard Name: " + messageBoard.getMessageboardName()); 
-				System.out.print("           Active: " + messageBoard.isActive()); 
-				System.out.print(" Rank Access Only: " + messageBoard.isRankAccess()); 
+			List<Company> companys = session.createQuery("FROM Company").list(); 
+			for (Iterator<Company> iterator = companys.iterator(); iterator.hasNext();){
+				Company company = iterator.next(); 
+				System.out.println(" Company Name: " + company.getCompanyName()); 
+				System.out.println("   Captain ID: " + company.getCaptainID()); 
+				System.out.println("Lieutenant ID: " + company.getLieutenantID()); 
+				System.out.println("       Active: " + company.isActive()); 
 			}
 			tx.commit();
 		} catch (HibernateException e) {
@@ -90,16 +89,16 @@ public class ManageMessageBoard {
 		}
 	}
 
-	/* Method to UPDATE board name of a messageboard */
-	public void updateMessageBoard(Integer messageBoardID, String messageBoardName ){
+	/* Method to UPDATE board name of a company */
+	public void updateCompany(Integer companyID, String companyName ){
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			MessageBoard messageBoard = session.get(MessageBoard.class, messageBoardID); 
-			messageBoard.setMessageboardName( messageBoardName );
-			session.update(messageBoardName); 
+			Company company = session.get(Company.class, companyID); 
+			company.setCompanyName( companyName );
+			session.update(companyName); 
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
@@ -110,14 +109,14 @@ public class ManageMessageBoard {
 	}
 
 	/* Method to DELETE a message board from the records */
-	public void deleteMessageBoard(Integer messageBoardID){
+	public void deleteCompany(Integer companyID){
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			MessageBoard messageBoard = session.get(MessageBoard.class, messageBoardID); 
-			session.delete(messageBoard); 
+			Company company = session.get(Company.class, companyID); 
+			session.delete(company); 
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();

@@ -10,10 +10,10 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class ManageMessageBoard {
+public class ManageEmail {
 	private static SessionFactory factory; 
 
-	public ManageMessageBoard() {}
+	public ManageEmail() {}
 
 	public static void main(String[] args) {
 
@@ -24,38 +24,36 @@ public class ManageMessageBoard {
 			throw new ExceptionInInitializerError(ex); 
 		}
 
-		ManageMessageBoard MM = new ManageMessageBoard();
+		ManageEmail MM = new ManageEmail();
 
 		/* Add few message board records in database */
-		Integer boardID1 = MM.addMessageBoard("Community News", true, true); 
-		Integer boardID2 = MM.addMessageBoard("Brigade Commanders", true, true);
-		Integer boardID3 = MM.addMessageBoard("Captain's Lounge", true, true); 
-		Integer boardID4 = MM.addMessageBoard("Charlie Company", true, false); 
-		Integer boardID5 = MM.addMessageBoard("Alpha Compnay", true, false); 
+		Integer emailID1 = MM.addEmail("j.sharpshooter@test.net", true); 
+		Integer emailID2 = MM.addEmail("williemakeit@outhouse.com", true);
+		Integer emailID3 = MM.addEmail("yoyo@email.org", true); 
 
 		/* List down all the message boards */
-		MM.listMessageBoards();
+		MM.listEmails();
 
 		/* Update message board records */
-		MM.updateMessageBoard(boardID5, "Alpha Company");
+		MM.updateEmail(emailID3, "thecaptain@dbrigade.com");
 
 		/* Delete a message board from the database */
-		MM.deleteMessageBoard(boardID4);
+		MM.deleteEmail(emailID2);
 
 		/* List down new list of the message boards */
-		MM.listMessageBoards();
+		MM.listEmails();
 	}
 
 	/* Method to CREATE a message board in the database */
-	public Integer addMessageBoard(String messageboardName, boolean active, boolean rankAccess){
+	public Integer addEmail(String emailName, boolean active){
 		Session session = factory.openSession();
 		Transaction tx = null;
-		Integer messageboardID = null;
+		Integer emailID = null;
 
 		try {
 			tx = session.beginTransaction();
-			MessageBoard messageBoard = new MessageBoard(messageboardName, active, rankAccess); 
-			messageboardID = (Integer) session.save(messageBoard);   
+			Email email = new Email(emailName, active); 
+			emailID = (Integer) session.save(email);   
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
@@ -63,23 +61,22 @@ public class ManageMessageBoard {
 		} finally {
 			session.close();
 		}
-		return messageboardID;
+		return emailID;
 	}
 
-	/* Method to  READ all the messageboards */
+	/* Method to  READ all the emails */
 	@SuppressWarnings("unchecked")
-	public void listMessageBoards( ){
+	public void listEmails( ){
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			List<MessageBoard> messageBoards = session.createQuery("FROM MessageBoard").list(); 
-			for (Iterator<MessageBoard> iterator = messageBoards.iterator(); iterator.hasNext();){
-				MessageBoard messageBoard = iterator.next(); 
-				System.out.print("Messageboard Name: " + messageBoard.getMessageboardName()); 
-				System.out.print("           Active: " + messageBoard.isActive()); 
-				System.out.print(" Rank Access Only: " + messageBoard.isRankAccess()); 
+			List<Email> emails = session.createQuery("FROM Email").list(); 
+			for (Iterator<Email> iterator = emails.iterator(); iterator.hasNext();){
+				Email email = iterator.next(); 
+				System.out.println("Email Name: " + email.getEmailName()); 
+				System.out.println("    Active: " + email.isActive()); 
 			}
 			tx.commit();
 		} catch (HibernateException e) {
@@ -90,16 +87,16 @@ public class ManageMessageBoard {
 		}
 	}
 
-	/* Method to UPDATE board name of a messageboard */
-	public void updateMessageBoard(Integer messageBoardID, String messageBoardName ){
+	/* Method to UPDATE board name of a email */
+	public void updateEmail(Integer emailID, String emailName ){
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			MessageBoard messageBoard = session.get(MessageBoard.class, messageBoardID); 
-			messageBoard.setMessageboardName( messageBoardName );
-			session.update(messageBoardName); 
+			Email email = session.get(Email.class, emailID); 
+			email.setEmailName( emailName );
+			session.update(emailName); 
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
@@ -110,14 +107,14 @@ public class ManageMessageBoard {
 	}
 
 	/* Method to DELETE a message board from the records */
-	public void deleteMessageBoard(Integer messageBoardID){
+	public void deleteEmail(Integer emailID){
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			MessageBoard messageBoard = session.get(MessageBoard.class, messageBoardID); 
-			session.delete(messageBoard); 
+			Email email = session.get(Email.class, emailID); 
+			session.delete(email); 
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
