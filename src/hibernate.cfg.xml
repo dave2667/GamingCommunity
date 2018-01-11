@@ -29,6 +29,7 @@
 		<mapping class="com.dbrigade.Company" />
 		<mapping class="com.dbrigade.Email" />
 		<mapping class="com.dbrigade.Member" />
+		<mapping class="com.dbrigade.Message" />
 		<mapping class="com.dbrigade.MessageBoard" />
 		<mapping class="com.dbrigade.MessageBoardAccess" />
 		<mapping class="com.dbrigade.Rank" />

@@ -1,6 +1,10 @@
 package com.dbrigade;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+
 import java.time.LocalDate;
 import java.util.Iterator; 
 
@@ -125,5 +129,15 @@ public class ManageMessageBoard {
 		} finally {
 			session.close(); 
 		}
+	}
+	
+	public Integer getNamedNewsBoard(String messageBoardName){
+		EntityManager em = DBUtil.emf.createEntityManager();
+		String sqlStatement = "SELECT messageboard_id FROM MESSAGEBOARD m WHERE messageboard_name = '"
+				+ messageBoardName + "' AND messageboard_active = 1 ORDER BY messageboard_id DESC";
+		
+		TypedQuery<MessageBoard> q2 =
+			      em.createQuery(sqlStatement, MessageBoard.class);
+		return q2.getFirstResult();
 	}
 }

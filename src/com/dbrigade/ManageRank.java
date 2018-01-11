@@ -31,7 +31,7 @@ public class ManageRank {
 		Integer rankID2 = MM.addRank("Private", true);
 		Integer rankID3 = MM.addRank("PFC", true); 
 		Integer rankID4 = MM.addRank("Corp", true); 
-		Integer rankID5 = MM.addRank("Sargeant", true); 
+		Integer rankID5 = MM.addRank("Sergeant", true); 
 		Integer rankID6 = MM.addRank("Lieutenant", true); 
 		Integer rankID7 = MM.addRank("Captain", true); 
 		Integer rankID8 = MM.addRank("Major", true); 
@@ -84,7 +84,7 @@ public class ManageRank {
 			for (Iterator<Rank> iterator = ranks.iterator(); iterator.hasNext();){
 				Rank rank = iterator.next(); 
 				System.out.println("Rank Name: " + rank.getRankName()); 
-				System.out.println("    Active: " + rank.isActive()); 
+				System.out.println("   Active: " + rank.isActive()); 
 			}
 			tx.commit();
 		} catch (HibernateException e) {

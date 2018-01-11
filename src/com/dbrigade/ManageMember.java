@@ -27,12 +27,12 @@ public class ManageMember {
       ManageMember MM = new ManageMember();
 
       /* Add few member records in database */
-      Integer mbrID1 = MM.addMember("IMDaBoss", "Johnnie", "Johnson", 1, 1,
+      Integer mbrID1 = MM.addMember("IMDaBoss", "Johnnie", "Johnson", 1, 10,
 		 LocalDate.of(2017,01,01), 1, 1, LocalDate.of(2017,01,01), true); 
       Integer mbrID2 = MM.addMember("SecondDog", "Able", "Baker", 2, 2,
-    	 LocalDate.of(2017,02,01), 1, 1, LocalDate.of(2017,01,01), false);
-      Integer mbrID3 = MM.addMember("MajorMajor", "Roger", "Oveur", 3, 3,
-    	 LocalDate.of(2017,06,01), 2, 2, LocalDate.of(2017,05,17), true); 
+    	 LocalDate.of(2017,02,01), 2, 1, LocalDate.of(2017,01,01), false);
+      Integer mbrID3 = MM.addMember("MajorMajor", "Roger", "Oveur", 3, 8,
+    	 LocalDate.of(2017,06,01), 3, 2, LocalDate.of(2017,05,17), true); 
 
       /* List down all the members */
       MM.listMembers();
@@ -82,7 +82,7 @@ public void listMembers( ){
             Member member = iterator.next(); 
             System.out.print("Gamertag: " + member.getGamerTag()); 
             System.out.print("First Name: " + member.getFirstName()); 
-            System.out.print("  Last Name: " + member.getLastName()); 
+            System.out.print(" Last Name: " + member.getLastName()); 
          }
          tx.commit();
       } catch (HibernateException e) {

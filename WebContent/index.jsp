@@ -1,6 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,8 +22,7 @@
 <!-- 	crossorigin="anonymous"> -->
 
 <!-- Custom styles for this template -->
-<link rel="stylesheet"
-	href="starter-template.css">
+<link rel="stylesheet" href="brigade-template.css">
 </head>
 
 <body>
@@ -39,7 +42,9 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="#about">About</a></li>
-					<li><a href="#contact">Contact</a></li>
+					<li><a href="#conduct">Conduct</a></li>
+					<li><a href="#join">Join</a></li>
+					<li><a href="#login">Log in</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -47,14 +52,23 @@
 	</nav>
 
 	<div class="container">
-		<div class="starter-template">
-			<h1>Welcome to the Devil's Brigade Gaming Community</h1>
+		<div class="jumbotron">
+			<h2>Welcome to the Devil's Brigade Gaming Community</h2>
 
-			<p class="lead">This is the home of the famed Devil's Brigade Gaming Community
-			</p>
-		</div> <!-- /.starter-template -->
-	</div>	<!-- /.container -->
-	
+			<p class="lead">This is the home of the Devil's Brigade Gaming
+				Community</p>
+		</div>
+		<!-- /.jumbotron -->
+		<div class="jumbotron">
+			<c:forEach items="${messageList}" var="message">
+            ${message.name} <br />
+			</c:forEach>
+		</div>
+		<!-- /.jumbotron -->
+
+	</div>
+	<!-- /.container -->
+
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
